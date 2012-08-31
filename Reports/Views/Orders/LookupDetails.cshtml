@@ -1,0 +1,67 @@
+@model Reports.Models.OrderModel
+
+@{
+    ViewBag.Title = "Order Details";
+}
+
+<style>
+    .label 
+    {
+        text-align:right;
+    }
+
+    .spacer
+    {
+        height:10px;
+    }
+
+    .value
+    {
+    }
+</style>
+
+<table border=1>
+    <tr><td class="label">Order ID:</td><td class="value">@Model.OrderID</td></tr>
+    <tr><td class="label">Order placed date:</td><td class="value">@Model.OrderPlacedDate</td></tr>
+    <tr><td class="label">Order Status:</td><td class="value">@Model.OrderStatus</td></tr>
+    <tr><td class="label">Order Type:</td><td class="value">@Model.OrderType</td></tr>
+    <tr><td class="label">Territory:</td><td class="value">@Model.CampusName</td></tr>
+    <tr><td class="label">Restaurant:</td><td class="value">@Model.RestaurantName (#@Model.RestaurantID)</td></tr>
+    <tr><td class="spacer" colspan="2"></td></tr>
+    <tr><td class="label">Login Email:</td><td class="value">@Model.LoginEmail (#@Model.CustomerID)</td></tr>
+    <tr><td class="label">First Name:</td><td class="value">@Model.FName</td></tr>
+    <tr><td class="label">Last Name:</td><td class="value">@Model.LName</td></tr>
+    <tr><td class="label">Customer Phone:</td><td class="value">@Model.CustomerPhone</td></tr>
+    <tr><td class="spacer" colspan="2"></td></tr>
+    <tr><td class="label">Delivery Address 1:</td><td class="value">@Model.DeliveryAddr1</td></tr>
+    <tr><td class="label">Delivery Address 2:</td><td class="value">@Model.DeliveryAddr2</td></tr>
+    <tr><td class="label">Delivery City:</td><td class="value">@Model.DeliveryCity</td></tr>
+    <tr><td class="label">Delivery State:</td><td class="value">@Model.DeliveryState</td></tr>
+    <tr><td class="label">Delivery Zip:</td><td class="value">@Model.DeliveryZip</td></tr>
+    <tr><td class="spacer" colspan="2"></td></tr>
+    <tr><td class="label">Cart Total:</td><td class="value">@Model.CartTotal</td></tr>
+    <tr><td class="label">Delivery Fee:</td><td class="value">@Model.DeliveryFee</td></tr>
+    <tr><td class="label">Processing Fee:</td><td class="value">@Model.ProcessingFee</td></tr>
+    <tr><td class="label">Tax:</td><td class="value">@Model.Tax</td></tr>
+    <tr><td class="label">Tip:</td><td class="value">@Model.Tip</td></tr>
+    <tr><td class="label">Order Total:</td><td class="value">@Model.OrderTotal</td></tr>
+    <tr><td class="spacer" colspan="2"></td></tr>
+    <tr><td class="label">Payment Method:</td><td class="value">@Model.PaymentMethod</td></tr>
+    <tr><td class="label">CC Type:</td><td class="value">@Model.CCType</td></tr>
+    <tr><td class="label">CC Name on Card:</td><td class="value">@Model.CCNameOnCard</td></tr>
+    <tr><td class="label">CC Expiration Date:</td><td class="value">@Model.CCExpire</td></tr>
+    <tr><td class="label">CC Address:</td><td class="value">@Model.CCAddressOnCard</td></tr>
+    <tr><td class="label">CC City:</td><td class="value">@Model.CCCityOnCard</td></tr>
+    <tr><td class="label">CC State:</td><td class="value">@Model.CCStateOnCard</td></tr>
+    <tr><td class="label">CC Zip:</td><td class="value">@Model.CCZipOnCard</td></tr>
+    <tr><td class="spacer" colspan="2"></td></tr>
+    <tr><td class="spacer" colspan="2"></td></tr>
+    <tr><td class="label">Affiliate:</td><td class="value">@Model.AffiliateName</td></tr>
+    <tr><td class="label">First Order?:</td><td class="value">@Model.FirstOrder</td></tr>
+    <tr><td class="label">LUCC Restaurant?:</td><td class="value">@Model.IsLUCCRestaurant</td></tr>
+    <tr><td class="label">Mobile Order?:</td><td class="value">@Model.IsMobileOrder</td></tr>
+    <tr><td class="label">Special Instructions:</td><td class="value">@Model.SpecialInstructions</td></tr>
+</table>
+<br />
+<br />
+<a href="javascript:history.go(-1);">Back</a> @Html.ActionLink("Home", "", "home")
