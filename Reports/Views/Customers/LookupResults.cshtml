@@ -1,0 +1,50 @@
+@model List<Reports.Models.CustomerModel>
+
+@{
+    ViewBag.Title = "Customer Lookup Results";
+}
+
+<link href="@Url.Content("~/Content/themes/blue/style.css")" rel="stylesheet" type="text/css" />
+<script src="@Url.Content("~/Scripts/jquery-1.6.2.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.tablesorter.js")" type="text/javascript"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#myTable").tablesorter();
+    });
+</script>
+
+@if (Model.Count == 100)
+{
+    @Html.Raw("Only the first 100 matching customers are shown.<br /><br />");
+}
+@if (Model.Count == 0) {
+    @Html.Raw("No customer found.");
+}
+<table id="myTable" class="tablesorter">
+    <thead>
+        <tr>
+                <th>Details</th>
+                <th>Customer ID</th>
+                <th>Login email</th>
+                <th>First name</th>
+                <th>Last name</th>
+                <th>Phone</th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (Reports.Models.CustomerModel customerModel in Model)
+    {
+        <tr>
+            <td>@Html.ActionLink("Details", "LookupDetails", new { CustomerID = customerModel.CustomerID })</td>
+            <td>@customerModel.CustomerID</td>
+            <td>@customerModel.FName</td>
+            <td>@customerModel.LName</td>
+            <td>@customerModel.LoginEmail</td>
+            <td>@customerModel.Phone</td>
+        </tr>
+    }
+    </tbody>
+</table>
+<br />
+<br />
+@Html.ActionLink("Back", "lookup") @Html.ActionLink("Home", "", "home")

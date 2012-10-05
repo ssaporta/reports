@@ -16,8 +16,8 @@ namespace Reports.Models
 
     public class OrderModel
     {
-        public string AffiliateName { get; set; }
-        public string CampusName { get; set; }
+        public string Affiliate { get; set; }
+        public string Campus { get; set; }
         public double CartTotal { get; set; }
         public string CCAddressOnCard { get; set; }
         public string CCCityOnCard { get; set; }
@@ -48,8 +48,7 @@ namespace Reports.Models
         public string PaymentMethod { get; set; }
         public string PartnerName { get; set; }
         public double ProcessingFee { get; set; }
-        public int RestaurantID { get; set; }
-        public string RestaurantName { get; set; }
+        public string Restaurant { get; set; }
         public string RestaurantPhone { get; set; }
         public string SpecialInstructions { get; set; }
         public double Tax { get; set; }

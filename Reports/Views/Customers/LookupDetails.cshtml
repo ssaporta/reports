@@ -1,0 +1,41 @@
+@model Reports.Models.CustomerModel
+
+@{
+    ViewBag.Title = "Customer Details";
+}
+
+<style>
+    .label 
+    {
+        text-align:right;
+    }
+
+    .spacer
+    {
+        height:10px;
+    }
+
+    .value
+    {
+    }
+</style>
+
+<table border=1>
+    <tr><td class="label">Customer ID:</td><td class="value">@Model.CustomerID</td></tr>
+    <tr><td class="label">Login Email:</td><td class="value">@Model.LoginEmail</td></tr>
+    <tr><td class="label">First Name:</td><td class="value">@Model.FName</td></tr>
+    <tr><td class="label">Last Name:</td><td class="value">@Model.LName</td></tr>
+    <tr><td class="label">Phone:</td><td class="value">@Model.Phone</td></tr>
+    <tr><td class="label">Registration date:</td><td class="value">@Model.CreateDate</td></tr>
+    <tr><td class="label">Active:</td><td class="value">@Model.IsActive</td></tr>
+    <tr><td class="spacer" colspan="2"></td></tr>
+    <tr><td class="label">Territory:</td><td class="value">@Model.Campus</td></tr>
+    <tr><td class="label">Restaurant:</td><td class="value">@Model.Restaurant</td></tr>
+    <tr><td class="label">Affiliate:</td><td class="value">@Model.Affiliate</td></tr>
+    <tr><td class="spacer" colspan="2"></td></tr>
+    <tr><td class="label">Opt In:</td><td class="value">@Model.OptIn</td></tr>
+    <tr><td class="label">Send Coupons:</td><td class="value">@Model.SendCoupons</td></tr>
+</table>
+<br />
+<br />
+<a href="javascript:history.go(-1);">Back</a> @Html.ActionLink("Home", "", "home")

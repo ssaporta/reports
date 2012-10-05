@@ -1,7 +1,7 @@
-@model Reports.Models.OrderParamsModel
+@model Reports.Models.CustomerParamsModel
 
 @{
-    ViewBag.Title = "Order Lookup";
+    ViewBag.Title = "Customer Lookup";
 }
 
 <style>
@@ -20,14 +20,14 @@
     });
 </script>
 
-Enter one or more values. The first 100 orders matching all your entries will be displayed.<br />
+Enter one or more values. The first 100 customers matching all your entries will be displayed.<br />
 For email and name, you may enter just the first few letters if you wish.<br />
-Don't forget that, on the test server, emails and names are sanitized, and there may be few orders for recent dates.<br />
+Don't forget that, on the test server, emails and names are sanitized, and there may be few customers for recent dates.<br />
 <br />
 
-@using (Html.BeginForm("lookupresults", "orders", FormMethod.Post)) {
+@using (Html.BeginForm("lookupresults", "customers", FormMethod.Post)) {
     //@Html.EditorForModel()
-    @Html.LabelFor(modelItem => @Model.OrderID) @Html.TextBoxFor(modelItem => @Model.OrderID)<br />
+    @Html.LabelFor(modelItem => @Model.CustomerID) @Html.TextBoxFor(modelItem => @Model.CustomerID)<br />
     @Html.LabelFor(modelItem => @Model.Date) @Html.TextBoxFor(modelItem => @Model.Date, new { @class="date" })<br />
     @Html.LabelFor(modelItem => @Model.LoginEmail) @Html.TextBoxFor(modelItem => @Model.LoginEmail)<br />
     @Html.LabelFor(modelItem => @Model.LastName) @Html.TextBoxFor(modelItem => @Model.LastName)<br />
