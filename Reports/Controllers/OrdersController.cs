@@ -19,50 +19,54 @@ namespace Reports.Controllers
 
         public ActionResult Lookup()
         {
-            Reports.Models.OrderParamsModel orderParams = new Reports.Models.OrderParamsModel();
-            return View(orderParams);
+            Reports.Models.ParamsModel myParams = new Reports.Models.ParamsModel();
+            return View(myParams);
         }
 
-        public ActionResult LookupResults(Reports.Models.OrderParamsModel orderParams)
+        public ActionResult LookupResults(Reports.Models.ParamsModel myParams)
         {
-            string query = "select top 100 o.OrderID, o.PaymentMethod, o.OrderPlacedDate, o.OrderTotal, o.OrderStatus, case o.IsTakeout when 1 then 'Takeout' else 'Delivery' end as OrderType, cu.FName, cu.LName, cu.LoginEmail, c.Name as Campus, r.Name as Restaurant from AllOrders o join Customers cu on cu.CustomerID = o.CustomerID join Restaurants r on r.RestaurantID = o.RestaurantID join Campuses c on c.CampusID = r.CampusID where";
-            bool firstClause = true;
-            if (orderParams.OrderID != null && orderParams.OrderID.Trim().Length > 0)
+            if (ModelState.IsValid)
             {
-                query += " o.OrderID=" + orderParams.OrderID.Trim();
-                firstClause = false;
-            }
-            if (orderParams.Date != null && orderParams.Date.Trim().Length > 0)
-            {
-                DateTime d = DateTime.Parse(orderParams.Date.Trim());
-                string startDate = "'" + d.Year + "-" + d.Month + "-" + d.Day + "'";
-                d = d.AddDays(1);
-                string endDate = "'" + d.Year + "-" + d.Month + "-" + d.Day + "'";
-                query += (firstClause ? "" : " and") + " o.OrderPlacedDate between " + startDate + " and " + endDate;
-                firstClause = false;
-            }
-            if (orderParams.LoginEmail != null && orderParams.LoginEmail.Trim().Length > 0)
-            {
-                query += (firstClause ? "" : " and") + " cu.LoginEmail like '" + orderParams.LoginEmail.Trim() + "%'";
-                firstClause = false;
-            }
-            if (orderParams.LastName != null && orderParams.LastName.Trim().Length > 0)
-            {
-                query += (firstClause ? "" : " and") + " cu.LName like '" + orderParams.LastName.Trim() + "%'";
-                firstClause = false;
-            }
-            query += " order by OrderID desc";
-
-            List<Reports.Models.OrderModel> orders = new List<Models.OrderModel>();
-            if (!firstClause)
-            {
-                using (SqlConnection conn = new SqlConnection(connectionString))
+                string query = "select top 100 o.OrderID, o.PaymentMethod, o.OrderPlacedDate, o.OrderTotal, o.OrderStatus, case o.IsTakeout when 1 then 'Takeout' else 'Delivery' end as OrderType, cu.FName, cu.LName, cu.LoginEmail, c.Name as Campus, r.Name as Restaurant from AllOrders o join Customers cu on cu.CustomerID = o.CustomerID join Restaurants r on r.RestaurantID = o.RestaurantID join Campuses c on c.CampusID = r.CampusID where";
+                bool firstClause = true;
+                if (myParams.ID != null && myParams.ID.Trim().Length > 0)
                 {
-                    conn.Open();
-                    orders = conn.Query<Reports.Models.OrderModel>(query).ToList();
+                    query += " o.OrderID=" + myParams.ID.Trim();
+                    firstClause = false;
                 }
+                if (myParams.Date != null && myParams.Date.Trim().Length > 0)
+                {
+                    DateTime d = DateTime.Parse(myParams.Date.Trim());
+                    string startDate = "'" + d.Year + "-" + d.Month + "-" + d.Day + "'";
+                    d = d.AddDays(1);
+                    string endDate = "'" + d.Year + "-" + d.Month + "-" + d.Day + "'";
+                    query += (firstClause ? "" : " and") + " o.OrderPlacedDate between " + startDate + " and " + endDate;
+                    firstClause = false;
+                }
+                if (myParams.LoginEmail != null && myParams.LoginEmail.Trim().Length > 0)
+                {
+                    query += (firstClause ? "" : " and") + " cu.LoginEmail like '" + myParams.LoginEmail.Trim() + "%'";
+                    firstClause = false;
+                }
+                if (myParams.LastName != null && myParams.LastName.Trim().Length > 0)
+                {
+                    query += (firstClause ? "" : " and") + " cu.LName like '" + myParams.LastName.Trim() + "%'";
+                    firstClause = false;
+                }
+                query += " order by OrderID desc";
+
+                List<Reports.Models.OrderModel> orders = new List<Models.OrderModel>();
+                if (!firstClause)
+                {
+                    using (SqlConnection conn = new SqlConnection(connectionString))
+                    {
+                        conn.Open();
+                        orders = conn.Query<Reports.Models.OrderModel>(query).ToList();
+                    }
+                }
+                return View(orders);
             }
-            return View(orders);
+            return View("Lookup");
         }
 
         public ActionResult LookupDetails(int orderID)

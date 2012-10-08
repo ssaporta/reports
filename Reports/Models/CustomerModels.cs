@@ -3,19 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.ComponentModel.DataAnnotations;
+using System.Web.Http.Validation;
+using System.Web.Http.Metadata;
 
 namespace Reports.Models
 {
-    public class CustomerParamsModel
-    {
-        [Required]
-        public string CustomerID { get; set; }
-
-        public string Date { get; set; }
-        public string LastName { get; set; }
-        public string LoginEmail { get; set; }
-    }
-
     public class CustomerModel
     {
         public string Affiliate { get; set; }

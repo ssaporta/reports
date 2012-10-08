@@ -6,14 +6,6 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Reports.Models
 {
-    public class OrderParamsModel
-    {
-        public string Date { get; set; }
-        public string OrderID { get; set; }
-        public string LastName { get; set; }
-        public string LoginEmail { get; set; }
-    }
-
     public class OrderModel
     {
         public string Affiliate { get; set; }

@@ -19,38 +19,38 @@ namespace Reports.Controllers
 
         public ActionResult Lookup()
         {
-            Reports.Models.CustomerParamsModel customerParams = new Reports.Models.CustomerParamsModel();
-            return View(customerParams);
+            Reports.Models.ParamsModel myParams = new Reports.Models.ParamsModel();
+            return View(myParams);
         }
 
-        public ActionResult LookupResults(Reports.Models.CustomerParamsModel customerParams)
+        public ActionResult LookupResults(Reports.Models.ParamsModel myParams)
         {
             if (ModelState.IsValid)
             {
                 string query = "select top 100 cu.CustomerID, cu.FName, cu.LName, cu.LoginEmail, cu.Phone1 as Phone from Customers cu where";
                 bool firstClause = true;
-                if (customerParams.CustomerID != null && customerParams.CustomerID.Trim().Length > 0)
+                if (myParams.ID != null && myParams.ID.Trim().Length > 0)
                 {
-                    query += " cu.CustomerID=" + customerParams.CustomerID.Trim();
+                    query += " cu.CustomerID=" + myParams.ID.Trim();
                     firstClause = false;
                 }
-                if (customerParams.Date != null && customerParams.Date.Trim().Length > 0)
+                if (myParams.Date != null && myParams.Date.Trim().Length > 0)
                 {
-                    DateTime d = DateTime.Parse(customerParams.Date.Trim());
+                    DateTime d = DateTime.Parse(myParams.Date.Trim());
                     string startDate = "'" + d.Year + "-" + d.Month + "-" + d.Day + "'";
                     d = d.AddDays(1);
                     string endDate = "'" + d.Year + "-" + d.Month + "-" + d.Day + "'";
                     query += (firstClause ? "" : " and") + " cu.CreateDate between " + startDate + " and " + endDate;
                     firstClause = false;
                 }
-                if (customerParams.LoginEmail != null && customerParams.LoginEmail.Trim().Length > 0)
+                if (myParams.LoginEmail != null && myParams.LoginEmail.Trim().Length > 0)
                 {
-                    query += (firstClause ? "" : " and") + " cu.LoginEmail like '" + customerParams.LoginEmail.Trim() + "%'";
+                    query += (firstClause ? "" : " and") + " cu.LoginEmail like '" + myParams.LoginEmail.Trim() + "%'";
                     firstClause = false;
                 }
-                if (customerParams.LastName != null && customerParams.LastName.Trim().Length > 0)
+                if (myParams.LastName != null && myParams.LastName.Trim().Length > 0)
                 {
-                    query += (firstClause ? "" : " and") + " cu.LName like '" + customerParams.LastName.Trim() + "%'";
+                    query += (firstClause ? "" : " and") + " cu.LName like '" + myParams.LastName.Trim() + "%'";
                     firstClause = false;
                 }
                 query += " order by LoginEmail";
