@@ -25,44 +25,48 @@ namespace Reports.Controllers
 
         public ActionResult LookupResults(Reports.Models.CustomerParamsModel customerParams)
         {
-            string query = "select top 100 cu.CustomerID, cu.FName, cu.LName, cu.LoginEmail, cu.Phone1 as Phone from Customers cu where";
-            bool firstClause = true;
-            if (customerParams.CustomerID != null && customerParams.CustomerID.Trim().Length > 0)
+            if (ModelState.IsValid)
             {
-                query += " cu.CustomerID=" + customerParams.CustomerID.Trim();
-                firstClause = false;
-            }
-            if (customerParams.Date != null && customerParams.Date.Trim().Length > 0)
-            {
-                DateTime d = DateTime.Parse(customerParams.Date.Trim());
-                string startDate = "'" + d.Year + "-" + d.Month + "-" + d.Day + "'";
-                d = d.AddDays(1);
-                string endDate = "'" + d.Year + "-" + d.Month + "-" + d.Day + "'";
-                query += (firstClause ? "" : " and") + " cu.CreateDate between " + startDate + " and " + endDate;
-                firstClause = false;
-            }
-            if (customerParams.LoginEmail != null && customerParams.LoginEmail.Trim().Length > 0)
-            {
-                query += (firstClause ? "" : " and") + " cu.LoginEmail like '" + customerParams.LoginEmail.Trim() + "%'";
-                firstClause = false;
-            }
-            if (customerParams.LastName != null && customerParams.LastName.Trim().Length > 0)
-            {
-                query += (firstClause ? "" : " and") + " cu.LName like '" + customerParams.LastName.Trim() + "%'";
-                firstClause = false;
-            }
-            query += " order by LoginEmail";
-
-            List<Reports.Models.CustomerModel> customers = new List<Models.CustomerModel>();
-            if (!firstClause)
-            {
-                using (SqlConnection conn = new SqlConnection(connectionString))
+                string query = "select top 100 cu.CustomerID, cu.FName, cu.LName, cu.LoginEmail, cu.Phone1 as Phone from Customers cu where";
+                bool firstClause = true;
+                if (customerParams.CustomerID != null && customerParams.CustomerID.Trim().Length > 0)
                 {
-                    conn.Open();
-                    customers = conn.Query<Reports.Models.CustomerModel>(query).ToList();
+                    query += " cu.CustomerID=" + customerParams.CustomerID.Trim();
+                    firstClause = false;
                 }
+                if (customerParams.Date != null && customerParams.Date.Trim().Length > 0)
+                {
+                    DateTime d = DateTime.Parse(customerParams.Date.Trim());
+                    string startDate = "'" + d.Year + "-" + d.Month + "-" + d.Day + "'";
+                    d = d.AddDays(1);
+                    string endDate = "'" + d.Year + "-" + d.Month + "-" + d.Day + "'";
+                    query += (firstClause ? "" : " and") + " cu.CreateDate between " + startDate + " and " + endDate;
+                    firstClause = false;
+                }
+                if (customerParams.LoginEmail != null && customerParams.LoginEmail.Trim().Length > 0)
+                {
+                    query += (firstClause ? "" : " and") + " cu.LoginEmail like '" + customerParams.LoginEmail.Trim() + "%'";
+                    firstClause = false;
+                }
+                if (customerParams.LastName != null && customerParams.LastName.Trim().Length > 0)
+                {
+                    query += (firstClause ? "" : " and") + " cu.LName like '" + customerParams.LastName.Trim() + "%'";
+                    firstClause = false;
+                }
+                query += " order by LoginEmail";
+
+                List<Reports.Models.CustomerModel> customers = new List<Models.CustomerModel>();
+                if (!firstClause)
+                {
+                    using (SqlConnection conn = new SqlConnection(connectionString))
+                    {
+                        conn.Open();
+                        customers = conn.Query<Reports.Models.CustomerModel>(query).ToList();
+                    }
+                }
+                return View(customers);
             }
-            return View(customers);
+            return View("Lookup");
         }
 
         public ActionResult LookupDetails(int customerID)

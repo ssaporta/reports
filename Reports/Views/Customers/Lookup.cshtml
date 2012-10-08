@@ -12,7 +12,7 @@
     }
 </style>
 
-<script src="@Url.Content("~/Scripts/jquery-1.6.2.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery-1.6.2.min.js")" type="text/javascript"></script>
 <script src="@Url.Content("~/Scripts/jquery-ui-1.8.11.js")" type="text/javascript"></script>
 <script type="text/javascript">
     $(document).ready(function () {
@@ -26,9 +26,10 @@ Don't forget that, on the test server, emails and names are sanitized, and there
 <br />
 
 @using (Html.BeginForm("lookupresults", "customers", FormMethod.Post)) {
-    //@Html.EditorForModel()
+    @Html.ValidationSummary()
+
     @Html.LabelFor(modelItem => @Model.CustomerID) @Html.TextBoxFor(modelItem => @Model.CustomerID)<br />
-    @Html.LabelFor(modelItem => @Model.Date) @Html.TextBoxFor(modelItem => @Model.Date, new { @class="date" })<br />
+    @Html.LabelFor(modelItem => @Model.Date) @Html.TextBoxFor(modelItem => @Model.Date, new { @class = "date" })<br />
     @Html.LabelFor(modelItem => @Model.LoginEmail) @Html.TextBoxFor(modelItem => @Model.LoginEmail)<br />
     @Html.LabelFor(modelItem => @Model.LastName) @Html.TextBoxFor(modelItem => @Model.LastName)<br />
     <input type="submit" />

@@ -8,8 +8,10 @@ namespace Reports.Models
 {
     public class CustomerParamsModel
     {
-        public string Date { get; set; }
+        [Required]
         public string CustomerID { get; set; }
+
+        public string Date { get; set; }
         public string LastName { get; set; }
         public string LoginEmail { get; set; }
     }
