@@ -121,9 +121,11 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Authentication.cs" />
     <Compile Include="Controllers\CustomersController.cs" />
     <Compile Include="Controllers\OrdersController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\UnauthorizedController.cs" />
     <Compile Include="Crypto.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -256,6 +258,12 @@
   <ItemGroup>
     <Content Include="Views\Home\Index.cshtml" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Home\Unauthorized.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Unauthorized\Index.cshtml" />
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
@@ -273,7 +281,7 @@
         <WebProjectProperties>
           <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>59404</DevelopmentServerPort>
+          <DevelopmentServerPort>51114</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>
           </IISUrl>

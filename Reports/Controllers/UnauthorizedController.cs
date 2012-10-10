@@ -6,11 +6,16 @@ using System.Web.Mvc;
 
 namespace Reports.Controllers
 {
-    public class HomeController : Controller
+    [AllowAnonymous]
+    public class UnauthorizedController : Controller
     {
+        //
+        // GET: /Unauthorized/
+
         public ActionResult Index()
         {
             return View();
         }
+
     }
 }
