@@ -10,22 +10,41 @@ namespace Reports.Controllers
     {
         public ActionResult Index()
         {
-            ViewBag.Message = "Modify this template to jump-start your ASP.NET MVC application.";
+            // ?token=WYkI1mwUdLogAlWBn0J4TOOXmqVKeEC4lN6O%2bPWS5jvDzqjAMuddqbT0bgdp8sPE
+            string tokenStatus = "ok";
+            string token = "";
 
-            return View();
-        }
+            if (Request["token"] != null)
+            {
+                string encryptedToken = Request["token"].ToString();
+                try
+                {
+                    Crypto crypto = new Crypto(true);
+                    token = crypto.Decrypt(Server.HtmlEncode(encryptedToken));
+                    char[] spaceSeparator = { ' ' };
+                    string[] a = token.Split(spaceSeparator);
+                    var timestamp = new DateTime(long.Parse(a[0]));
+                    if (timestamp.AddMinutes(120) < DateTime.Now)
+                    {
+                        tokenStatus = "Expired token";
+                        token = "";
+                    }
+                    else
+                        Session["token"] = token;
+                }
+                catch (Exception ex)
+                {
+                    tokenStatus = ex.Message;
+                }
+            }
 
-        public ActionResult About()
-        {
-            ViewBag.Message = "Your quintessential app description page.";
+            if (Session["token"] != null)
+                token = Session["token"].ToString();
+            else
+                tokenStatus = "Missing token";
 
-            return View();
-        }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your quintessential contact page.";
-
+            ViewBag.TokenStatus = tokenStatus;
+            ViewBag.Token = token;
             return View();
         }
     }
