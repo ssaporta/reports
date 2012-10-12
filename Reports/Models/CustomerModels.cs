@@ -10,6 +10,7 @@ namespace Reports.Models
 {
     public class CustomerModel
     {
+        public ParamsModel Params { get; set; }
         public string Affiliate { get; set; }
         public string Campus { get; set; }
         public DateTime CreateDate { get; set; }

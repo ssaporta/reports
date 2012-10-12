@@ -4,6 +4,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+using System.Data.SqlClient;
+using Dapper;
 
 namespace Reports
 {
@@ -58,6 +60,48 @@ namespace Reports
                         new RouteValueDictionary { { "action", "Index" }, { "controller", "Unauthorized" }, { "tokenStatus", tokenStatus } }
                     );
                 }
+            }
+        }
+
+        public static string GetTerritoryIDsFromToken()
+        {
+            try
+            {
+                string token = HttpContext.Current.Session["token"].ToString();
+                char[] spaceSeparator = { ' ' };
+                string[] a = token.Split(spaceSeparator);
+                return a[1];
+            }
+            catch
+            {
+                return "";
+            }
+        }
+
+        public static string GetTerritoryNamesFromToken()
+        {
+            try
+            {
+                string territoryIDs = GetTerritoryIDsFromToken();
+                string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["OOSDatabase"].ConnectionString;
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    string query = "select Name from Campuses with (nolock) where CampusID in (" + territoryIDs + ")";
+                    conn.Open();
+                    IEnumerable<string>territoryNames = conn.Query<string>(query);
+                    string s = "";
+                    foreach (string territoryName in territoryNames)
+                    {
+                        if (s.Length > 0)
+                            s += ", ";
+                        s += territoryName;
+                    }
+                    return s;
+                }
+            }
+            catch (Exception ex)
+            {
+                return ex.Message;
             }
         }
     }

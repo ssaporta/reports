@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Data.SqlClient;
 using Dapper;
+using System.Data;
 
 namespace Reports.Controllers
 {
@@ -64,7 +65,7 @@ namespace Reports.Controllers
                         customers = conn.Query<Reports.Models.CustomerModel>(query).ToList();
                     }
                 }
-                return View(customers);
+                return View(new Tuple<Reports.Models.ParamsModel, List<Reports.Models.CustomerModel>>(myParams, customers));
             }
             return View("Lookup");
         }
@@ -92,6 +93,21 @@ namespace Reports.Controllers
         public ActionResult Reports()
         {
             return View();
+        }
+
+        public ActionResult CustomerReport(Reports.Models.CustomerReportModel customerReportModel)
+        {
+            List<Reports.Models.CustomerReportModel> customers = new List<Models.CustomerReportModel>();
+            customerReportModel.results = new List<Models.Results>();
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                conn.Open();
+                customerReportModel.results = conn.Query<Reports.Models.Results>(
+                    "CustomerReport", new { campusID = customerReportModel.CampusID, startDate = customerReportModel.StartDate, endDate = customerReportModel.EndDate }
+                    , commandType: CommandType.StoredProcedure
+                ).ToList();
+            }
+            return View(customerReportModel);
         }
     }
 }

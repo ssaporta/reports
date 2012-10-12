@@ -1,7 +1,8 @@
-@model List<Reports.Models.OrderModel>
+@model Tuple<Reports.Models.ParamsModel, List<Reports.Models.OrderModel>>
 
 @{
     ViewBag.Title = "Order Lookup Results";
+    ViewBag.Params = Model.Item1;
 }
 
 <link href="@Url.Content("~/Content/themes/blue/style.css")" rel="stylesheet" type="text/css" />
@@ -11,32 +12,35 @@
     });
 </script>
 
-@if (Model.Count == 100)
+@Html.Partial("LookupHeader")
+
+@if (Model.Item2.Count == 100)
 {
     @Html.Raw("Only the first 100 matching orders are shown.<br /><br />");
 }
-@if (Model.Count == 0) {
+@if (Model.Item2.Count == 0)
+{
     @Html.Raw("No order found.");
 }
 <table id="myTable" class="tablesorter">
     <thead>
         <tr>
-                <th>Details</th>
-                <th>Order ID</th>
-                <th>Order placed date</th>
-                <th>Order status</th>
-                <th>Order type</th>
-                <th>Territory</th>
-                <th>Restaurant</th>
-                <th>Login email</th>
-                <th>First name</th>
-                <th>Last name</th>
-                <th>Payment method</th>
-                <th>Order total</th>
+            <th>Details</th>
+            <th>Order ID</th>
+            <th>Order placed date</th>
+            <th>Order status</th>
+            <th>Order type</th>
+            <th>Territory</th>
+            <th>Restaurant</th>
+            <th>Login email</th>
+            <th>First name</th>
+            <th>Last name</th>
+            <th>Payment method</th>
+            <th>Order total</th>
         </tr>
     </thead>
     <tbody>
-    @foreach (Reports.Models.OrderModel orderModel in Model)
+    @foreach (Reports.Models.OrderModel orderModel in Model.Item2)
     {
         <tr>
             <td>@Html.ActionLink("Details", "LookupDetails", new { OrderID = orderModel.OrderID })</td>

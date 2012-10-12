@@ -64,7 +64,7 @@ namespace Reports.Controllers
                         orders = conn.Query<Reports.Models.OrderModel>(query).ToList();
                     }
                 }
-                return View(orders);
+                return View(new Tuple<Reports.Models.ParamsModel, List<Reports.Models.OrderModel>>(myParams, orders));
             }
             return View("Lookup");
         }
