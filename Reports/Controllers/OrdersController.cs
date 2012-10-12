@@ -19,11 +19,11 @@ namespace Reports.Controllers
 
         public ActionResult Lookup()
         {
-            Reports.Models.ParamsModel myParams = new Reports.Models.ParamsModel();
+            Models.ParamsModel myParams = new Models.ParamsModel();
             return View(myParams);
         }
 
-        public ActionResult LookupResults(Reports.Models.ParamsModel myParams)
+        public ActionResult LookupResults(Models.ParamsModel myParams)
         {
             if (ModelState.IsValid)
             {
@@ -55,16 +55,16 @@ namespace Reports.Controllers
                 }
                 query += " order by OrderID desc";
 
-                List<Reports.Models.OrderModel> orders = new List<Models.OrderModel>();
+                List<Models.OrderModel> orders = new List<Models.OrderModel>();
                 if (!firstClause)
                 {
                     using (SqlConnection conn = new SqlConnection(connectionString))
                     {
                         conn.Open();
-                        orders = conn.Query<Reports.Models.OrderModel>(query).ToList();
+                        orders = conn.Query<Models.OrderModel>(query).ToList();
                     }
                 }
-                return View(new Tuple<Reports.Models.ParamsModel, List<Reports.Models.OrderModel>>(myParams, orders));
+                return View(new Tuple<Models.ParamsModel, List<Models.OrderModel>>(myParams, orders));
             }
             return View("Lookup");
         }
@@ -91,7 +91,7 @@ namespace Reports.Controllers
                 query += " join Partners p on p.PartnerID = o.PartnerID";
                 query += " left outer join Affiliates a on a.AffiliateID = o.AffiliateID";
                 query += " where o.OrderID = " + orderID;
-                Reports.Models.OrderModel order = conn.Query<Reports.Models.OrderModel>(query).ToList().First();
+                Models.OrderModel order = conn.Query<Models.OrderModel>(query).ToList().First();
                 return View(order);
             }
         }

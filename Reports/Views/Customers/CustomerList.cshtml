@@ -1,4 +1,4 @@
-﻿@model Reports.Models.CustomerListModels
+﻿@model Reports.Models.CustomerListModel
 
 @{
     ViewBag.Title = "Customer List";
@@ -41,16 +41,16 @@
                 </tr>
             </thead>
             <tbody>
-            @foreach (Reports.Models.CustomerListOutput output in Model.Output)
+            @foreach (Reports.Models.CustomerModel customer in Model.Output)
             {
                 <tr>
-                    <td>@output.LoginEmail</td>
-                    <td>@output.Fname</td>
-                    <td>@output.Lname</td>
-                    <td>@output.Phone</td>
-                    <td>@output.RestaurantName</td>
-                    <td>@output.OptIn</td>
-                    <td>@output.SendCoupons</td>
+                    <td>@customer.LoginEmail</td>
+                    <td>@customer.FName</td>
+                    <td>@customer.LName</td>
+                    <td>@customer.Phone</td>
+                    <td>@customer.Restaurant</td>
+                    <td>@customer.OptIn</td>
+                    <td>@customer.SendCoupons</td>
                 </tr>
             }
             </tbody>

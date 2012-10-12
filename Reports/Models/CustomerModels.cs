@@ -24,4 +24,12 @@ namespace Reports.Models
         public string Restaurant { get; set; }
         public bool SendCoupons { get; set; }
     }
+
+    public class CustomerListModel
+    {
+        public int CampusID { get; set; }
+        public DateTime StartDate { get; set; }
+        public DateTime EndDate { get; set; }
+        public List<CustomerModel> Output { get; set; }
+    }
 }

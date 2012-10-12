@@ -20,11 +20,11 @@ namespace Reports.Controllers
 
         public ActionResult Lookup()
         {
-            Reports.Models.ParamsModel myParams = new Reports.Models.ParamsModel();
+            Models.ParamsModel myParams = new Models.ParamsModel();
             return View(myParams);
         }
 
-        public ActionResult LookupResults(Reports.Models.ParamsModel myParams)
+        public ActionResult LookupResults(Models.ParamsModel myParams)
         {
             if (ModelState.IsValid)
             {
@@ -56,16 +56,16 @@ namespace Reports.Controllers
                 }
                 query += " order by LoginEmail";
 
-                List<Reports.Models.CustomerModel> customers = new List<Models.CustomerModel>();
+                List<Models.CustomerModel> customers = new List<Models.CustomerModel>();
                 if (!firstClause)
                 {
                     using (SqlConnection conn = new SqlConnection(connectionString))
                     {
                         conn.Open();
-                        customers = conn.Query<Reports.Models.CustomerModel>(query).ToList();
+                        customers = conn.Query<Models.CustomerModel>(query).ToList();
                     }
                 }
-                return View(new Tuple<Reports.Models.ParamsModel, List<Reports.Models.CustomerModel>>(myParams, customers));
+                return View(new Tuple<Models.ParamsModel, List<Models.CustomerModel>>(myParams, customers));
             }
             return View("Lookup");
         }
@@ -85,7 +85,7 @@ namespace Reports.Controllers
                 query += " left outer join Restaurants r on r.RestaurantID = isnull(cu.RestaurantID, 0)";
                 query += " left outer join Campuses c on c.CampusID = isnull(r.CampusID, 0)";
                 query += " where cu.CustomerID = " + customerID;
-                Reports.Models.CustomerModel customer = conn.Query<Reports.Models.CustomerModel>(query).ToList().First();
+                Models.CustomerModel customer = conn.Query<Models.CustomerModel>(query).ToList().First();
                 return View(customer);
             }
         }
@@ -95,16 +95,16 @@ namespace Reports.Controllers
             return View();
         }
 
-        public ActionResult CustomerList(Reports.Models.CustomerListModels customerListModel)
+        public ActionResult CustomerList(Models.CustomerListModel customerListModel)
         {
-            List<Reports.Models.CustomerListModels> customers = new List<Models.CustomerListModels>();
-            customerListModel.Output = new List<Models.CustomerListOutput>();
+            List<Models.CustomerListModel> customers = new List<Models.CustomerListModel>();
+            customerListModel.Output = new List<Models.CustomerModel>();
             if (customerListModel.CampusID != 0)
             {
                 using (SqlConnection conn = new SqlConnection(connectionString))
                 {
                     conn.Open();
-                    customerListModel.Output = conn.Query<Reports.Models.CustomerListOutput>(
+                    customerListModel.Output = conn.Query<Models.CustomerModel>(
                         "CustomerList", new { campusID = customerListModel.CampusID, startDate = customerListModel.StartDate, endDate = customerListModel.EndDate }
                         , commandType: CommandType.StoredProcedure
                     ).ToList();
