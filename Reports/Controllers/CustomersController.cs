@@ -95,19 +95,22 @@ namespace Reports.Controllers
             return View();
         }
 
-        public ActionResult CustomerReport(Reports.Models.CustomerReportModel customerReportModel)
+        public ActionResult CustomerList(Reports.Models.CustomerListModels customerListModel)
         {
-            List<Reports.Models.CustomerReportModel> customers = new List<Models.CustomerReportModel>();
-            customerReportModel.results = new List<Models.Results>();
-            using (SqlConnection conn = new SqlConnection(connectionString))
+            List<Reports.Models.CustomerListModels> customers = new List<Models.CustomerListModels>();
+            customerListModel.Output = new List<Models.CustomerListOutput>();
+            if (customerListModel.CampusID != 0)
             {
-                conn.Open();
-                customerReportModel.results = conn.Query<Reports.Models.Results>(
-                    "CustomerReport", new { campusID = customerReportModel.CampusID, startDate = customerReportModel.StartDate, endDate = customerReportModel.EndDate }
-                    , commandType: CommandType.StoredProcedure
-                ).ToList();
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+                    customerListModel.Output = conn.Query<Reports.Models.CustomerListOutput>(
+                        "CustomerList", new { campusID = customerListModel.CampusID, startDate = customerListModel.StartDate, endDate = customerListModel.EndDate }
+                        , commandType: CommandType.StoredProcedure
+                    ).ToList();
+                }
             }
-            return View(customerReportModel);
+            return View(customerListModel);
         }
     }
 }

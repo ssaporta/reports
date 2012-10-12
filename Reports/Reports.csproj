@@ -130,8 +130,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\CustomerReportParamsModel.cs" />
-    <Compile Include="Models\CustomerReportModel.cs" />
+    <Compile Include="Models\CustomerListModels.cs" />
     <Compile Include="Models\ParamsModel.cs" />
     <Compile Include="Models\CustomerModels.cs" />
     <Compile Include="Models\OrderModels.cs" />
@@ -270,7 +269,7 @@
     <Content Include="Views\Shared\LookupHeader.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Customers\CustomerReport.cshtml" />
+    <Content Include="Views\Customers\CustomerList.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

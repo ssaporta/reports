@@ -1,0 +1,61 @@
+﻿@model Reports.Models.CustomerListModels
+
+@{
+    ViewBag.Title = "Customer List";
+}
+
+<link href="@Url.Content("~/Content/themes/blue/style.css")" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#myTable").tablesorter();
+    });
+</script>
+
+@using (Html.BeginForm("CustomerList", "customers", FormMethod.Post)) {
+
+    <table>
+    <tr><td class="table-label">@Html.LabelFor(modelItem => @Model.CampusID):</td><td>@Html.TextBoxFor(modelItem => @Model.CampusID, new { maxlength = "9" })</td></tr>
+    <tr><td class="table-label">@Html.LabelFor(modelItem => @Model.StartDate):</td><td>@Html.TextBoxFor(modelItem => @Model.StartDate, new { @class = "date" })</td></tr>
+    <tr><td class="table-label">@Html.LabelFor(modelItem => @Model.EndDate):</td><td>@Html.TextBoxFor(modelItem => @Model.EndDate, new { @class = "date" })</td></tr>
+    <tr><td></td><td><input type="submit" value="Submit" /></td></tr>
+    </table>
+    @Html.Hidden("submitted", "true");
+}
+
+@if (Model.CampusID != 0)
+{
+    <div>
+        <br />
+        @Model.Output.Count customers found<br />
+
+        <table id="myTable" class="tablesorter">
+            <thead>
+                <tr>
+                    <th>Login email</th>
+                    <th>First name</th>
+                    <th>Last name</th>
+                    <th>Phone</th>
+                    <th>Restaurant</th>
+                    <th>Opt in</th>
+                    <th>Send coupons</th>
+                </tr>
+            </thead>
+            <tbody>
+            @foreach (Reports.Models.CustomerListOutput output in Model.Output)
+            {
+                <tr>
+                    <td>@output.LoginEmail</td>
+                    <td>@output.Fname</td>
+                    <td>@output.Lname</td>
+                    <td>@output.Phone</td>
+                    <td>@output.RestaurantName</td>
+                    <td>@output.OptIn</td>
+                    <td>@output.SendCoupons</td>
+                </tr>
+            }
+            </tbody>
+        </table>
+        <br />
+    </div>
+}
+@Html.ActionLink("Back", "reports") @Html.ActionLink("Home", "", "home")

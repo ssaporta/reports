@@ -5,15 +5,15 @@ using System.Web;
 
 namespace Reports.Models
 {
-    public class CustomerReportModel
+    public class CustomerListModels
     {
         public int CampusID { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
-        public List<Results> results { get; set; }
+        public List<CustomerListOutput> Output { get; set; }
     }
 
-    public class Results
+    public class CustomerListOutput
     {
         public DateTime CreateDate { get; set; }
         public string Fname { get; set; }
